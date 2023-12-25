@@ -71,21 +71,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WoofApp() {
     Scaffold(
+        //Cabecera
         topBar = {
             WoofTopAppBar()
-        }
-    ) { it ->
-        LazyColumn(contentPadding = it) {
-            items(dogs) {
-                DogItem(
-                    dog = it,
-                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
-                )
+        },
+        //Cuerpo
+        content = {
+            LazyColumn(contentPadding = it) {
+                items(dogs) {
+                    DogItem(
+                        dog = it,
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
+                    )
+                }
             }
         }
-    }
+    )
 }
 
+/**
+ * Composable that displays a top bar on the app
+ *
+ * @param modifier modifiers to set to this composable
+ */
 @Composable
 fun WoofTopAppBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
@@ -98,7 +106,6 @@ fun WoofTopAppBar(modifier: Modifier = Modifier) {
                         .size(dimensionResource(id = R.dimen.image_size))
                         .padding(dimensionResource(id = R.dimen.padding_small)),
                     painter = painterResource(R.drawable.ic_woof_logo),
-
                     contentDescription = null
                 )
                 Text(
@@ -123,8 +130,7 @@ fun DogItem(
     modifier: Modifier = Modifier
 ) {
     Card(modifier = modifier
-        //Valor por defecto
-        //.clip(MaterialTheme.shapes.medium),
+        //.clip(MaterialTheme.shapes.medium) //Valor por defecto
         ) {
         Row(
             modifier = Modifier
@@ -155,10 +161,6 @@ fun DogIcon(
             .clip(MaterialTheme.shapes.small),
         contentScale = ContentScale.Crop,
         painter = painterResource(dogIcon),
-
-        // Content Description is not needed here - image is decorative, and setting a null content
-        // description allows accessibility services to skip this element during navigation.
-
         contentDescription = null
     )
 }
@@ -194,7 +196,7 @@ fun DogInformation(
  */
 @Preview
 @Composable
-fun WoofPreview() {
+fun WoofLightPreview() {
     WoofTheme(darkTheme = false) {
         WoofApp()
     }
