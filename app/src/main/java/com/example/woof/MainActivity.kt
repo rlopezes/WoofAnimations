@@ -34,6 +34,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -61,6 +62,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.woof.data.Dog
 import com.example.woof.data.dogs
 import com.example.woof.ui.theme.WoofTheme
@@ -147,6 +149,8 @@ fun DogItem(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    //EL COLOR CAMBIA DE INICIAL A FINAL HACIENDO UNA TRANSICIÓN
     val color by animateColorAsState(
         targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
         else MaterialTheme.colorScheme.secondaryContainer
@@ -154,10 +158,13 @@ fun DogItem(
     )
 
     Card(modifier = modifier
-        //.clip(MaterialTheme.shapes.medium) //Valor por defecto
+        .clip(MaterialTheme.shapes.medium) //Valor por defecto
         ) {
         Column(
             modifier = Modifier
+
+                //ANIMACIÓN DE REBOTE
+                //SE DEBE ESPECIFICAR EN EL MODIFIER DEL COLUMN
                 .animateContentSize(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioHighBouncy,
@@ -166,6 +173,8 @@ fun DogItem(
                         //stiffness = Spring.StiffnessMedium
                     )
                 )
+
+                //COLOR CAMBIA SI ESTÁ ESPANDIDO O NO
                 .background(color = color)
         ) {
             Row(
@@ -175,9 +184,18 @@ fun DogItem(
             ) {
                 DogIcon(dog.imageResourceId)
                 DogInformation(dog.name, dog.age)
+
+                //ESPACIO CON DISTANCIA RELATIVA (COMPLETA EL ESPACIO)
                 Spacer(modifier = Modifier.weight(1f))
+
+                //ESPACIO CON DISTANCIA ABSOLUTA
+                //Spacer(modifier = Modifier.width(10.dp))
+
+                //AÑADIMOS EL BOTÓN DE PLEGADO/DESPLEGADO
                 DogItemButton(
                     expanded = expanded,
+
+                    //AL PULSAR CAMBIA EL VALOR DE LA VARIABLE
                     onClick = { expanded = !expanded }
                 )
             }
