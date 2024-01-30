@@ -225,6 +225,7 @@ private fun DogItemButton(
         modifier = modifier
     ) {
         Icon(
+            //LA IMAGEN DEL ICONO CAMBIA AL PULSAR
             imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
             contentDescription = stringResource(R.string.expand_button_content_description),
             tint = MaterialTheme.colorScheme.secondary
